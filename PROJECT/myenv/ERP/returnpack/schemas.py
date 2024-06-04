@@ -23,8 +23,6 @@ class customerOut(Schema):
     phone: int 
     contact: str = None
 
-
-
 class SupplierIn(BaseModel):
     type : str
     firstname : str
@@ -32,9 +30,6 @@ class SupplierIn(BaseModel):
     email : str 
     workphone : int
     phone : int 
-
-
-
 
 class SupplierOut(Schema):
     type : str
@@ -44,16 +39,13 @@ class SupplierOut(Schema):
     workphone : int
     phone : int 
 
-
 class categoryIn(BaseModel):
     name: str
     description : str
 
-
 class categoryOut(Schema):
     name: str
     description : str   
-
 
 class ItemIn(BaseModel):
     name : str
@@ -102,9 +94,6 @@ class stockIn(BaseModel):
     warehouse_id: int
     quantity: int
 
-
-
-
 class stockOut(Schema) :
     name : str
     item_id : int
@@ -120,7 +109,6 @@ class SalesIn(BaseModel):
     item_id: int
     quantity: int
 
-
 class SalesOut(BaseModel):
     amount: float
     date: date
@@ -128,9 +116,6 @@ class SalesOut(BaseModel):
     payment_method: str
     item_id: int
     quantity: int
-
-
-
 
 class purchaseIn(BaseModel):
     amount: float
@@ -148,8 +133,6 @@ class purchaseOut(Schema):
     item_id: int
     quantity: int
 
-
-
 class paymentIn(BaseModel):
     amount: float
     date: date
@@ -158,7 +141,6 @@ class paymentIn(BaseModel):
     item_id: int
     quantity: int
 
-
 class paymentOut(Schema):
     amount: float
     date: date
@@ -166,7 +148,6 @@ class paymentOut(Schema):
     payment_method: str
     item_id: int
     quantity: int
-
 
 class PackagingCountOut(BaseModel):
     item_id: int
@@ -183,8 +164,6 @@ class packagingIn(BaseModel):
     unit: str
     storagespace: int
 
-
-
 class packagingOut(BaseModel):
     type : str
     item_id : int
@@ -195,26 +174,16 @@ class packagingOut(BaseModel):
     dimensions : float
     storagespace : int 
 
-
-
 class PackagingMouvmentIn(BaseModel):
     name: str
     packaging_id: int
     mouvement: str
-
-
 
 class PackagingMouvmentOut(BaseModel):
     name: str
     packaging_id: int
     mouvement: str
   
-
-
-
-
-
-
 class OrderIn(BaseModel):
     customer_id: int
     packaging_id: int
@@ -244,18 +213,15 @@ class OrderOut(BaseModel):
     total_amount: float
     payment_method: str
 
-
 class ShipmentIn(BaseModel):
     packaging_id:int 
     tracking_number: str
     status: str
 
-
 class ShipmentOut(BaseModel):
     packaging_id:int 
     tracking_number: str
     status: str
-
 
 
 

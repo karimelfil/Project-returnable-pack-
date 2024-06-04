@@ -1,10 +1,9 @@
-from django.shortcuts import render ,get_object_or_404
+from django.shortcuts import get_object_or_404
 from ninja import NinjaAPI , responses 
 from .models import *
 from .schemas import *
 from .enum import *
 from django.http import HttpResponse 
-from ninja.errors import HttpError
 from typing import List
 api = NinjaAPI()
 # Create your views here.
@@ -126,7 +125,6 @@ def create_packaging(request,packaging: packagingIn):
         unit=packaging.unit,
         storagespace=packaging.storagespace
     )
-    # Create a dictionary from Packaging object's attributes
     packaging_dict = {
         "id": new_packaging.id,
         "type": new_packaging.type,
@@ -140,8 +138,6 @@ def create_packaging(request,packaging: packagingIn):
         "storagespace": new_packaging.storagespace
     }
     return packagingOut(**packaging_dict)
-
-
 
 @api.post("/sales/", response=SalesOut)
 def create_sales(request, sales: SalesIn):
@@ -219,8 +215,6 @@ def create_packagingmouvment(request, payload: PackagingMouvmentIn):
         
     )
 
-
-
 @api.post("/orders/", response=OrderOut)
 def create_order(request, payload: OrderIn):
     customer = get_object_or_404(Customer, id=payload.customer_id)
@@ -258,7 +252,6 @@ def create_order(request, payload: OrderIn):
         payment_method=order.payment_method,
     )
 
-
 @api.post("/shipments/", response=ShipmentOut)
 def create_shipment(request,payload: ShipmentIn):
     packaging = get_object_or_404(Packaging, id=payload.packaging_id)
@@ -273,11 +266,6 @@ def create_shipment(request,payload: ShipmentIn):
        tracking_number=shipment.tracking_number,
        status=shipment.status
     )
-
-
-
-
-
 
 # CRUD methods :
 
@@ -317,7 +305,6 @@ def delete_customer(request, customer_id: int):
     customer.delete()
     return HttpResponse(status=204)
 
-
 @api.put("/supplier/{supplier_id}/{type}/{firstname}/{lastname}/{email}/{workphone}/{phone}/", response=SupplierIn)
 def update_supplier(request, supplier_id: int, type: custonerr, firstname: str, lastname: str, email: str, workphone: int, phone: int):
     supplier = Supplier.objects.filter(id=supplier_id).first()
@@ -350,7 +337,6 @@ def delete_supplier(request, supplier_id: int):
     supplier.delete()
     return {"succces" : True}
 
-
 @api.put("/category/{category_id}/{name}/{description}/", response=categoryIn)
 def update_category(request, category_id: int, name: str, description: str):
     category = Category.objects.filter(id=category_id).first()
@@ -374,8 +360,6 @@ def delete_category(request, category_id: int):
 
     category.delete()
     return {"succces" : True}
-
-
 
 @api.put("/item/{item_id}/{category_id}/{name}/{description}/{unit}/{dimensions}/{weight}/{brand}/", response=ItemIn)
 def update_item(request, item_id: int, category_id: int, name: str, description: str, unit: itemss, dimensions: float, weight: float, brand: str):
@@ -415,7 +399,6 @@ def delete_item(request, item_id: int):
     item.delete()
     return HttpResponse(status=204)
 
-
 @api.put("/warehouse/{warehouse_id}/{address}/{city}/{country}/{area}/{capacity}/{openingtime}/{closingtime}/", response=WarehouseIn)
 def update_warehouse(request, warehouse_id: int, address: str, city: str, country: str, area: str, capacity: int, openingtime: int, closingtime: int):
     warehouse = Warehouse.objects.filter(id=warehouse_id).first()
@@ -451,7 +434,6 @@ def delete_warehouse(request, warehouse_id: int):
     warehouse.delete()
     return HttpResponse(status=204)
 
-
 @api.put("/stock/{stock_id}/{item_id}/{warehouse_id}/{quantity}/", response=stockIn)
 def update_stock(request, stock_id: int, item_id: int, warehouse_id: int, quantity: int):
     stock = Stock.objects.filter(id=stock_id).first()
@@ -485,7 +467,6 @@ def delete_stock(request, stock_id: int):
 
     stock.delete()
     return HttpResponse(status=204)
-
 
 @api.put("/sales/{sales_id}/{amount}/{date}/{currency}/{payment_method}/{item_id}/{quantity}/",response=SalesIn)
 def update_sales(request, sales_id: int, amount: float, date: date, currency: str, payment_method : str,item_id: int, quantity: int):
@@ -523,7 +504,6 @@ def delete_sales(request, sales_id: int):
     sales.delete()
     return HttpResponse(status=204)
 
-
 @api.put("/purchase/{purchase_id}/{amount}/{date}/{currency}/{payment_method}/{item_id}/{quantity}/",response=purchaseIn)
 def update_purchase(request, purchase_id: int, amount: float, date: date, currency: str, payment_method : str,item_id: int, quantity: int):
     purchase = Purchase.objects.filter(id=purchase_id).first()
@@ -559,7 +539,6 @@ def delete_purchase(request, purchase_id: int):
 
     purchase.delete()
     return HttpResponse(status=204)
-
 
 @api.put("/payment/{payment_id}/{amount}/{date}/{currency}/{payment_method}/{item_id}/{quantity}/",response=paymentIn)
 def update_payment(request, payment_id: int, amount: float, date: date, currency: str, payment_method : str,item_id: int, quantity: int):
@@ -597,7 +576,6 @@ def delete_payment(request, payment_id: int):
     payment.delete()
     return HttpResponse
     return HttpResponse(status=204)
-
 
 @api.put("/packaging/{packaging_id}/{type}/{item_id}/{quantity}/{weight}/{price}/{capacity}/{dimensions}/{unit}/{durabilty}/{storagespace}/", response=packagingOut)
 def update_packaging(request, packaging_id: int, type: str, item_id: int, quantity: int, weight: float, price: float, capacity: float, dimensions: float, unit: packss, durabilty: int, storagespace: float):
@@ -637,7 +615,6 @@ def delete_packagingmouvment(request, packagingmouvment_id: int):
     packagingmouvment.delete()
     return {"detail": "Packaging movement deleted successfully."}
 
-
 @api.put("/packagingmouvment/{packagingmouvment_id}/", response=PackagingMouvmentOut)
 def update_packagingmouvment(request, packagingmouvment_id: int, data: PackagingMouvmentIn):
     packagingmouvment = get_object_or_404(PackagingMouvment, id=packagingmouvment_id)
@@ -668,9 +645,6 @@ def delete_packaging(request, packaging_id: int):
 
     packaging.delete()
     return HttpResponse(status=204)
-
-
-
 
 @api.put("/orders/{order_id}/", response=OrderOut)
 def update_order(request, order_id: int, payload: OrderIn):
@@ -739,8 +713,6 @@ def delete_shipment(request, shipment_id: int):
     shipment_obj.delete()
 
     return {"message": "Shipment deleted successfully"}
-
-
 # Get methods :
 
 @api.get("/supplier/{supplier_id}/", response=SupplierIn)
@@ -860,8 +832,6 @@ def get_packagingmouvment(request, packagingmouvment_id: int):
         mouvement=packagingmouvment.mouvement,
     )
 
-
-
 @api.get("/stock/{stock_id}/", response=stockIn)
 def get_stock(request, stock_id: int):
     stock = get_object_or_404(Stock, id=stock_id)
@@ -894,15 +864,12 @@ def get_order(request, order_id: int):
         payment_method=order.payment_method,
     )
 
-
 @api.get("/shipment/{shipment_id}")
 def get_shipment(request, shipment_id: int):
     try:
         shipment_obj = Shipment.objects.get(id=shipment_id)
     except Shipment.DoesNotExist:
         return {"message": "Shipment not found"}
-
-    # Serialize the Shipment object to ShipmentOut schema
     shipment_data = ShipmentOut(
         packaging_id=shipment_obj.packaging_id,
         tracking_number=shipment_obj.tracking_number,
@@ -910,8 +877,6 @@ def get_shipment(request, shipment_id: int):
     )
 
     return shipment_data.dict()
-
-
 
 # Other featues :
 
@@ -1010,7 +975,6 @@ def list_stock(request):
         stock_list.append(stock)
     return stock_list
 
-
 @api.get("/customer/",response=List[customerOut])
 def list_customer(request):
     customer_instaces=Customer.objects.all()
@@ -1042,14 +1006,25 @@ def list_returnable_packaging(request):
         ))
     return packaging_list
 
-
-
-
-
-
 @api.get("/stock/company", response=List[stockOut])
 def list_company_stock(request):
     company_warehouses = Warehouse.objects.filter(type='company')
+    stock_list = []
+    for warehouse in company_warehouses:
+        stocks = Stock.objects.filter(warehouse=warehouse)
+        for stock in stocks:
+            stock_list.append(stockOut(
+                id=stock.id,
+                name=stock.name,
+                item_id=stock.item.id,
+                warehouse_id=stock.warehouse.id,
+                quantity=stock.quantity
+            ))
+    return stock_list
+
+@api.get("/stock/client", response=List[stockOut])
+def list_client_stock(request):
+    company_warehouses = Warehouse.objects.filter(type='client')
     stock_list = []
     for warehouse in company_warehouses:
         stocks = Stock.objects.filter(warehouse=warehouse)
@@ -1109,7 +1084,6 @@ def increase_stock_quantity_on_return(request):
             return {"error": str(e)}
     return {"message": "Stock quantities updated successfully"}
 
-
 @api.get("/shipment/", response=List[ShipmentOut])
 def list_shipments(request):
     shipments = Shipment.objects.all()
@@ -1138,6 +1112,36 @@ def list_item(request):
         )
         item_list.append(item)
     return item_list
+
+@api.get("/packaging/shipments/{packaging_id}/", response=List[ShipmentOut])
+def packaging_shipment_status_tracking(request, packaging_id: int):
+    packaging = get_object_or_404(Packaging, id=packaging_id)
+    shipment = Shipment.objects.filter(packaging=packaging)
+    packaging_shipment_status = []
+
+    for shipments in shipment:
+        shipment_data = ShipmentOut(
+            id=shipments.id,
+            status=shipments.status,
+            packaging_id=shipments.packaging_id,
+            tracking_number=shipments.tracking_number
+        )
+        packaging_shipment_status.append(shipment_data)
+
+    return packaging_shipment_status
+
+@api.get("/stock/{stock_id}/", response=List[stockOut])
+def search_stock(request, stock_id: int):
+    stock = Stock.objects.filter(id=stock_id).first()
+    if stock:
+        return [stockOut(
+            name=stock.name,
+            item_id=stock.item,
+            warehouse_id=stock.warehouse,
+            quantity=stock.quantity
+
+
+        )]
+    else:
+        return responses.Response(status_code=404, content={"message": "Stock not found"})
     
-
-

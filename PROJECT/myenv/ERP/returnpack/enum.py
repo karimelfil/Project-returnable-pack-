@@ -4,11 +4,9 @@ class Billl(str,Enum):
     priamary="paid"
     secondry="unpaid"
 
-
 class custonerr(str,Enum):
     priamary="Buisness"
     secondry="Individuel"
-
 
 class itemss(str,Enum):
     priamry="kg"
@@ -21,13 +19,11 @@ class packss(str,Enum):
     thirdly="kg"
     fouth="g"
 
-
 class contacttt(str,Enum):
     priamry="President"
     secondly="vice-president"
     thirdly=" Director"
     fourthly="General manager"
-
 
 class mouvmementt(str,Enum):
     priamry="issue"

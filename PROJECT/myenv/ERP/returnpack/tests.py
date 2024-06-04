@@ -7,7 +7,7 @@ from django.test import TestCase
 from .models import *
 from django.test import TestCase ,Client
 from django.urls import reverse
-from returnpack.models import *
+from .models import *
 import json
 from .schemas import *
 from .views import api
@@ -421,10 +421,10 @@ class ModelTestCase(TestCase):
 
 
 #VIEWS TESTER :
-from rest_framework.test import APIClient
+# from rest_framework.test import APIClient
 class APITestCase(TestCase):
     def setUp(self):
-        self.client = APIClient()
+        # self.client = APIClient()
         self.supplier = Supplier.objects.create(
             type="Type",
             firstname="John",

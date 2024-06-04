@@ -11,5 +11,4 @@ admin.site.register(Sales)
 admin.site.register(Purchase)
 admin.site.register(Payment)
 admin.site.register(Packaging)
-
 admin.site.register(Order)

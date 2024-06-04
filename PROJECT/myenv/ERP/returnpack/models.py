@@ -37,8 +37,6 @@ class Item(models.Model):
     brand = models.CharField(max_length=100, default="default value")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')
 
-
-
 class Warehouse(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
@@ -50,18 +48,12 @@ class Warehouse(models.Model):
     closingtime = models.TimeField()
     type = models.CharField(max_length=10,default="default value")
 
-
-
 class Stock(models.Model):
     name = models.CharField(max_length=100, default="default value")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='stock')
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, related_name='stock')
     quantity = models.IntegerField(default=0)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="stock", null=True, blank=True, default=None)
-
-
-
-
 
 class Packaging(models.Model):
     type = models.CharField(max_length=100, default="returnable")  
@@ -74,8 +66,6 @@ class Packaging(models.Model):
     unit = models.CharField(max_length=100, default="")
     storagespace = models.FloatField(default=0.0)
 
-
-
 class Sales(models.Model):
     amount = models.FloatField()
     date = models.DateField()
@@ -84,8 +74,6 @@ class Sales(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="sales")
     quantity = models.IntegerField()
     
-
-
 class Purchase(models.Model):
     amount = models.FloatField()
     date = models.DateField()
@@ -93,8 +81,6 @@ class Purchase(models.Model):
     payment_method = models.CharField(max_length=50,default="default value")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="purchase",default="default value")
     quantity = models.IntegerField()
-
-
 
 class Payment(models.Model):
     amount = models.FloatField()
@@ -104,20 +90,10 @@ class Payment(models.Model):
     item= models.ForeignKey(Item, on_delete=models.CASCADE, related_name="payment")
     quantity = models.IntegerField()
 
-
-
-
-
-
 class PackagingMouvment(models.Model):
     name = models.CharField(max_length=100, default="default value")
     packaging = models.ForeignKey(Packaging, on_delete=models.CASCADE)
     mouvement = models.CharField(max_length=100, default="default value")
-
-   
-
-
-
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
@@ -132,7 +108,6 @@ class Order(models.Model):
     shipping_address = models.CharField(max_length=30,default="self pickup")
     total_amount = models.FloatField()
     payment_method = models.CharField(max_length=20,default="cash")
-
 
 class Shipment(models.Model):
     packaging = models.ForeignKey(Packaging, on_delete=models.CASCADE,related_name="shipment")
